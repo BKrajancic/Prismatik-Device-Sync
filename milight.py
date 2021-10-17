@@ -21,7 +21,7 @@ def _get_average(connection):
 
     r, g, b = zip(
         *tuple(
-            map(str.split, list(entries)[: len(entries) // 2], itertools.repeat(","))
+            map(str.split, list(entries)[: len(entries)], itertools.repeat(","))
         )
     )
     geometric_mean = False
