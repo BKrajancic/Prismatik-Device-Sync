@@ -1,17 +1,12 @@
 import itertools
-from mss import mss
 import socket
 import statistics
 import colorsys
 import itertools
-import time
-from PIL import ImageGrab
 from operator import itemgetter
 from typing import Tuple
 import socket
-import numpy
 
-from PIL.Image import Image
 
 def get_connection():
     connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -69,21 +64,3 @@ def _get_average_hsv(connection):
     h, s, v = zip(*list(map(colorsys.rgb_to_hsv, r, g, b)))
     # v = [0 if val < 20 else val for val in v]
     return (statistics.mean(h), statistics.mean(s), statistics.mean(v))
-
-def capture_screenshot():
-    # Capture entire screen
-    with mss() as sct:
-        img_t = numpy.array(sct.grab(sct.monitors[1])).T
-        return numpy.mean(numpy.mean(img_t, axis=1), axis=1)
-
-
-def _screengrab_average():
-    t1 = time.time()
-    img = capture_screenshot()
-    t2 = time.time()
-    print ("- Time %2.4f" % (t2-t1))
-    b = img[0]
-    g = img[1]
-    r = img[2]
-    h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-    return h, s, v
