@@ -2,11 +2,11 @@ import itertools
 import socket
 import statistics
 import colorsys
-import itertools
+import time
+import json
 from operator import itemgetter
 from typing import Tuple
 import socket
-
 
 def get_connection():
     connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
