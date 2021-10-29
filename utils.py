@@ -61,6 +61,17 @@ def _get_average_hsv(connection):
     r = [float(val) / 255 for val in r]
     g = [float(val) / 255 for val in g]
     b = [float(val) / 255 for val in b]
+
     h, s, v = zip(*list(map(colorsys.rgb_to_hsv, r, g, b)))
     # v = [0 if val < 20 else val for val in v]
     return (statistics.mean(h), statistics.mean(s), statistics.mean(v))
+
+def _get_median_hsv(connection):
+    r, g, b = get_leds(connection)
+    r = [int(val) / 255 for val in r]
+    g = [int(val) / 255 for val in g]
+    b = [int(val) / 255 for val in b]
+
+    h, s, v = zip(*list(map(colorsys.rgb_to_hsv, r, g, b)))
+    # v = [0 if val < 20 else val for val in v]
+    return (statistics.median(h), statistics.median(s), statistics.median(v))
