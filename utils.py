@@ -75,3 +75,13 @@ def _get_median_hsv(connection):
     h, s, v = zip(*list(map(colorsys.rgb_to_hsv, r, g, b)))
     # v = [0 if val < 20 else val for val in v]
     return (statistics.median(h), statistics.median(s), statistics.median(v))
+
+def _get_median_rgb(connection) -> Tuple[float, float, float]:
+    r, g, b = get_leds(connection)
+    r_median = statistics.median(map(int, r))
+    g_median = statistics.median(map(int, g))
+    b_median = statistics.median(map(int, b))
+
+    h, s, v = colorsys.rgb_to_hsv(r_median / 255, g_median / 255, b_median / 255)
+    return h, s, v
+
