@@ -1,10 +1,11 @@
 import itertools
+import operator
 import socket
 import statistics
 import colorsys
 import time
 import json
-from operator import itemgetter
+from operator import itemgetter, truediv
 from typing import Tuple
 import socket
 
@@ -14,10 +15,15 @@ def get_connection():
     connection.recv(8192)
     return connection
 
-def get_leds(connection: socket.socket):
+def get_leds(connection: socket.socket, nth: int = 1):
+    """
+    Get leds from prismatik.
+
+    nth means to only get every nth led.
+    """
     connection.send(str.encode("getcolors\n"))
     data = connection.recv(8192)
-    string = data.decode().split(":", 1)[1][:-3]
+    string = data.decode().split(":", 1)[1][:-nth]
     entries = map(
         itemgetter(1), map(str.split, string.split(";"), itertools.repeat("-"))
     )
@@ -36,8 +42,15 @@ def get_leds(connection: socket.socket):
     return r, g, b
 
 
-def _get_average_rgb(connection) -> Tuple[float, float, float]:
-    r, g, b = get_leds(connection)
+def _get_average_rgb(connection, gamma_correction: float, nth: int) -> Tuple[float, float, float]:
+    """
+    Get the average color of every led, by averaging the RGB values.
+
+    Gamma_correction is what gamma correction to apply. "1.0" means none.
+    nth: When getting the average only use every nth led.
+    """
+    r, g, b = get_leds(connection, nth)
+
     geometric_mean = False
     if geometric_mean:
         r = [1 if value == "0" else int(value) for value in r]
@@ -48,9 +61,18 @@ def _get_average_rgb(connection) -> Tuple[float, float, float]:
         g_mean = statistics.geometric_mean(g)
         b_mean = statistics.geometric_mean(b)
     else:
-        r_mean = statistics.mean(map(int, r))
-        g_mean = statistics.mean(map(int, g))
-        b_mean = statistics.mean(map(int, b))
+        r = map(int, r)
+        g = map(int, g)
+        b = map(int, b)
+        if gamma_correction != 1.0:
+            max_val = 255
+            r = [max_val * pow(val / max_val, gamma_correction) for val in r]
+            g = [max_val * pow(val / max_val, gamma_correction) for val in g]
+            b = [max_val * pow(val / max_val, gamma_correction) for val in b]
+
+        r_mean = statistics.mean(r)
+        g_mean = statistics.mean(g)
+        b_mean = statistics.mean(b)
 
     h, s, v = colorsys.rgb_to_hsv(r_mean / 255, g_mean / 255, b_mean / 255)
     return h, s, v
