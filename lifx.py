@@ -27,7 +27,7 @@ def _main():
     kelvin_range = [bulb.get_min_kelvin() + 1500, bulb.get_max_kelvin()]
     send_only_on_change = False
     gammas = ( (2.0, 0.01), (1.0, 0.05))
-    gamma, min_brightness = gammas[2]
+    gamma, min_brightness = gammas[0]
 
     while True:
         # current_set = _get_average_hsv(connection)
