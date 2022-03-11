@@ -15,15 +15,16 @@ def get_connection():
     connection.recv(8192)
     return connection
 
-def get_leds(connection: socket.socket, nth: int = 1):
-    """
-    Get leds from prismatik.
+def is_on(connection: socket.socket) -> bool:
+    connection.send(str.encode("getstatus\n"))
+    data: str = connection.recv(8192).decode().strip()
+    return data == "status:on"
 
-    nth means to only get every nth led.
-    """
+def get_leds(connection: socket.socket):
+    """Get leds from prismatik."""
     connection.send(str.encode("getcolors\n"))
     data = connection.recv(8192)
-    string = data.decode().split(":", 1)[1][:-nth]
+    string = data.decode().split(":", 1)[1][:-3]
     entries = map(
         itemgetter(1), map(str.split, string.split(";"), itertools.repeat("-"))
     )
@@ -44,12 +45,11 @@ def get_leds(connection: socket.socket, nth: int = 1):
 
 def _get_average_rgb(connection, gamma_correction: float, nth: int) -> Tuple[float, float, float]:
     """
-    Get the average color of every led, by averaging the RGB values.
+    Returns HSV. Get the average color of every led, by averaging the RGB values.
 
     Gamma_correction is what gamma correction to apply. "1.0" means none.
-    nth: When getting the average only use every nth led.
     """
-    r, g, b = get_leds(connection, nth)
+    r, g, b = get_leds(connection)
 
     geometric_mean = False
     if geometric_mean:
