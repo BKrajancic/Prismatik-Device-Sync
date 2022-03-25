@@ -25,7 +25,7 @@ def _get_bulb() -> Light:
 
 
 def _main():
-    useIcon = False
+    useIcon = True
     if useIcon:
         from icon import StartIcon
         icon = StartIcon()
