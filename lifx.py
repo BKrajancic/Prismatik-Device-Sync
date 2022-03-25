@@ -1,6 +1,7 @@
+import json
 import time
 import operator
-from icon import StartIcon
+import os
 from utils import (
     get_connection,
     _get_average_hsv,
@@ -13,12 +14,21 @@ from lifxlan import LifxLAN, Light
 
 def _get_bulb() -> Light:
     lifxlan = LifxLAN()
-    bulb: Light = lifxlan.get_color_lights()[0]
+    configFilepath = "lifxConfig.json"
+    if os.path.exists(configFilepath):
+        with open(configFilepath, 'r') as f:
+            config = json.load(f)[0]
+            bulb = Light(config['mac_address'], config['ip_address'])
+    else:
+        bulb: Light = lifxlan.get_color_lights()[0]
     return bulb
 
 
 def _main():
-    icon = StartIcon()
+    useIcon = False
+    if useIcon:
+        from icon import StartIcon
+        icon = StartIcon()
 
     connection = get_connection()
     bulb = _get_bulb()
@@ -38,8 +48,9 @@ def _main():
     is_off = True
     last_set = 0, 0, 0
     while True:
-        if not icon.active:
-            continue
+        if useIcon:
+            if not icon.active:
+                continue
 
         if not is_on(connection):
             continue
