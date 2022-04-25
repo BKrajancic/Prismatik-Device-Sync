@@ -7,13 +7,6 @@ import time
 import json
 from operator import itemgetter, truediv
 from typing import Tuple
-import socket
-
-def get_connection():
-    connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    connection.connect(("127.0.0.1", 3636))
-    connection.recv(8192)
-    return connection
 
 def is_on(connection: socket.socket) -> bool:
     connection.send(str.encode("getstatus\n"))
