@@ -1,11 +1,11 @@
 """wrap a bulb around this to prevent it always sending"""
 from ctypes.wintypes import RGB
-from rgb_device import RGBDevice
+from HSVSink import HSVSink
 import operator
 
 
-class BulbThreshold(RGBDevice):
-    def __init__(self, rgbDevice: RGBDevice):
+class ThresholdSink(HSVSink):
+    def __init__(self, rgbSink: HSVSink):
         self._send_only_on_change = False
         self._thresholds = 0.02, 0.02, 0.02
 
@@ -14,7 +14,7 @@ class BulbThreshold(RGBDevice):
 
         # Bring this out perhaps.
         self._min_brightness_if_off = self._min_brightness * 3
-        self._rgbDevice = rgbDevice
+        self._rgbSink = rgbSink
         self.max_val = 65535
         # max_val = 65535
         # is_off = True
@@ -47,4 +47,4 @@ class BulbThreshold(RGBDevice):
             elif self._is_off:
                 self._is_off = False
 
-            self._rgbDevice.send(*current_set)
+            self._rgbSink.send(*current_set)

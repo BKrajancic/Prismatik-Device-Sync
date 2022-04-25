@@ -1,4 +1,3 @@
-# Import the required libraries
 import threading
 from functools import partial
 from tkinter import *
@@ -7,7 +6,6 @@ from pystray import MenuItem as item
 from PIL import Image
 
 class trayIcon:
-
     def __init__(self):
         self.active = True
         self.offico = Image.open("off.ico") 

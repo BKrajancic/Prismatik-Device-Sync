@@ -1,5 +1,5 @@
 from operator import truediv
-from rgb_device import RGBDevice
+from HSVSink import HSVSink
 import socket
 import os
 import json
@@ -17,7 +17,7 @@ def _get_bulb() -> Light:
     return bulb
 
 
-class LifxAdapter(RGBDevice):
+class LifxSink(HSVSink):
     def __init__(self) -> None:
         self.bulb = _get_bulb()
         self._is_on = False
