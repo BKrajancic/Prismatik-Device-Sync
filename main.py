@@ -11,7 +11,7 @@ def _main():
         icon = StartIcon()
 
     delay = 1 / 60
-    sink = ThresholdSink(LifxSink())
+    sinks = [ThresholdSink(LifxSink())]
     source = PrismatikSource()
 
     while True:
@@ -20,7 +20,10 @@ def _main():
                 continue
 
         if source.is_running():
-            sink.send(*source.get_hsv())
+            hsv = source.get_hsv()
+            for sink in sinks:
+                sink.send(*hsv)
+
 
         time.sleep(delay)
 
