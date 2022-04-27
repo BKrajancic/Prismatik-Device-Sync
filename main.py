@@ -32,7 +32,7 @@ def _main():
         help="Type of device to sync")
     args = parser.parse_args()
 
-    sink = SINKS[args.type.lower()]
+    sink = SINKS[args.type]
     if config["UseThreshold"]:
         sink = ThresholdSink(sink())
 

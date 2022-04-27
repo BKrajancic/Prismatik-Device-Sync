@@ -1,5 +1,5 @@
 {
-    "RefreshRate": 24,
-    "UseIcon": true,
+    "RefreshRate": 60,
+    "UseIcon": false,
     "UseThreshold": true
 }
