@@ -1,5 +1,6 @@
 {
-    "ip": "192.168.0.?",
-    "port": 8899,
-    "zoneId": "4"
+    "Type": "Razer/Milight/Lifx",
+    "RefreshRate": 60,
+    "UseIcon": true,
+    "UseThreshold": true
 }

@@ -1,4 +1,3 @@
-from operator import truediv
 from HSVSink import HSVSink
 import socket
 import os
