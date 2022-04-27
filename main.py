@@ -1,5 +1,7 @@
+import argparse
 import time
 import json
+from typing import KeysView
 from LifxSink import LifxSink
 from PrismatikSource import PrismatikSource
 from RazerSink import RazerSink
@@ -23,7 +25,14 @@ def _main():
 
     delay = 1 / config["RefreshRate"]
     source = PrismatikSource()
-    sink = SINKS[config["Type"].lower()]
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--type",
+        choices= SINKS.keys(),
+        help="Type of device to sync")
+    args = parser.parse_args()
+
+    sink = SINKS[args.type.lower()]
     if config["UseThreshold"]:
         sink = ThresholdSink(sink())
 

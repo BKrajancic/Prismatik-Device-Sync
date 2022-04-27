@@ -1,6 +1,5 @@
 {
-    "Type": "Razer/Milight/Lifx",
-    "RefreshRate": 60,
+    "RefreshRate": 24,
     "UseIcon": true,
     "UseThreshold": true
 }
