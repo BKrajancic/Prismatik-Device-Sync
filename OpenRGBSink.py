@@ -5,24 +5,17 @@ import itertools
 import time
 from operator import mul
 
-class RazerSink(HSVSink):
+from openrgb import OpenRGBClient
+from openrgb.utils import RGBColor, DeviceType
+
+class OpenRGBSink(HSVSink):
     def __init__(self) -> None:
-        self._sdk = Razer.sdk()
-        self._sdk.connect()
+        self._client = OpenRGBClient()
 
     def send(self, hue: int, saturation: int, value: int) -> None:
         rgb = hsv_to_rgb(hue, min(saturation * 2, 1.0), value)
         rgb = map(mul, itertools.repeat(255), rgb)
         rgb = map(round, rgb)
         rgb = tuple(rgb)
-        self._sdk.set_rgb({"ETC": rgb})
-
-if __name__ == "__main__":
-    # Quick demo
-    r = Razer.sdk()
-    r.connect()
-    for i in range(10):
-        _id = "MouseMat"
-        r.set_rgb({_id: (255, 0, 0)})
-        time.sleep(1)
-
+        for device in self._client.devices:
+            device.set_color(RGBColor(rgb))

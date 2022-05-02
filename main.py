@@ -7,11 +7,13 @@ from PrismatikSource import PrismatikSource
 from RazerSink import RazerSink
 from ThresholdSink import ThresholdSink
 from MilightSink import MilightSink 
+from OpenRGBSink import OpenRGBSink 
 
 SINKS = {
     "razer": RazerSink, 
     "lifx": LifxSink,
-    "milight": MilightSink
+    "milight": MilightSink,
+    "openrgb": OpenRGBSink
 }
 
 def _main():
