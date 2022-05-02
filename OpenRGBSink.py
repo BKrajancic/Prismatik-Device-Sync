@@ -2,7 +2,6 @@ from pyrgbdev import Razer
 from colorsys import hsv_to_rgb
 from HSVSink import HSVSink
 import itertools
-import time
 from operator import mul
 
 from openrgb import OpenRGBClient
