@@ -12,9 +12,9 @@ class OpenRGBSink(HSVSink):
         self._client = OpenRGBClient()
 
     def send(self, hue: int, saturation: int, value: int) -> None:
-        rgb = hsv_to_rgb(hue, min(saturation * 2, 1.0), value)
+        rgb = hsv_to_rgb(hue, saturation, value)
         rgb = map(mul, itertools.repeat(255), rgb)
         rgb = map(round, rgb)
         rgb = tuple(rgb)
         for device in self._client.devices:
-            device.set_color(RGBColor(rgb))
+            device.set_color(RGBColor(*rgb))

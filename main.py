@@ -1,7 +1,8 @@
 import argparse
 import time
 import json
-from typing import KeysView
+
+from BoosterSink import BoosterSink
 from LifxSink import LifxSink
 from PrismatikSource import PrismatikSource
 from RazerSink import RazerSink
@@ -34,9 +35,15 @@ def _main():
         help="Type of device to sync")
     args = parser.parse_args()
 
-    sink = SINKS[args.type]
+    sink = SINKS[args.type]()
     if config["UseThreshold"]:
-        sink = ThresholdSink(sink())
+        sink = ThresholdSink(sink)
+    
+    sink = BoosterSink(
+        sink,
+        config["SaturationBoost"],
+        config["ValueBoost"]
+    )
 
     while True:
         if use_icon and not icon.active:
