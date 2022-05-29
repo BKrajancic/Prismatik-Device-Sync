@@ -8,7 +8,16 @@ Download the following in .ico, then put here with off.ico and on.ico.
 off icon: https://www.iconfinder.com/icons/2205230/botton_left_off_on_icon
 on icon: https://www.iconfinder.com/icons/2205232/botton_off_on_right_icon 
 
-# Copyign this repo
-Do git clone <url> Razer-Addon
-or 
-Do git clone <url> Lifx-Addon
+# Copying this repo
+Depending on how you copy this repo, is which device this plugin will run with.
+
+Go to directory your addons directory ( ~\Prismatik\Plugins)
+
+## Razer
+`git clone <url> Razer-Addon`
+## Lifx
+`git clone <url> Lifx-Addon`
+## OpenRGB
+`git clone <url> Lifx-Addon`
+## Milight
+`git clone <url> Milight`
