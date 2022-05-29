@@ -6,7 +6,6 @@ import operator
 
 class ThresholdSink(HSVSink):
     def __init__(self, rgbSink: HSVSink):
-        self._send_only_on_change = False
         self._thresholds = 0.02, 0.02, 0.02
 
         self._gamma = 1.0
@@ -26,7 +25,6 @@ class ThresholdSink(HSVSink):
 
 
     def send(self, hue: int, saturation: int, value: int) -> None:
-        send_only_on_change = False
         current_set = [hue, saturation, value]
 
         if current_set[1] < 0.05:
@@ -39,7 +37,7 @@ class ThresholdSink(HSVSink):
             current_set[2] = 0
 
         deltas = map(abs, map(operator.sub, self._last_set, current_set))
-        if not (send_only_on_change) or any(map(operator.gt, deltas, self.thresholds)):
+        if any(map(operator.gt, deltas, self._thresholds)):
             self._last_set = current_set
 
             if current_set[2] == 0:
