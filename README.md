@@ -18,6 +18,6 @@ Go to directory your addons directory ( ~\Prismatik\Plugins)
 ## Lifx
 `git clone <url> Lifx-Addon`
 ## OpenRGB
-`git clone <url> Lifx-Addon`
+`git clone <url> OpenRGB-Addon`
 ## Milight
-`git clone <url> Milight`
+`git clone <url> Milight-Addon`
