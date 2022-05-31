@@ -1,7 +1,9 @@
 {
     "RefreshRate": 24,
     "UseIcon": false,
-    "UseThreshold": true,
-    "SaturationBoost": 2.0,
-    "ValueBoost": 1.0
+    "UseThreshold": false,
+    "SaturationBoost": 1.0,
+    "ValueBoost": 1.0,
+    "ValueMin": 0.1,
+    "SaturationMin": 0.2
 }
