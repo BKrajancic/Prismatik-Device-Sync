@@ -10,9 +10,9 @@ class FloorSink(HSVSink):
         self._HSVSink = HSVSink 
 
     def send(self, hue: int, saturation: int, value: int) -> None:
-        if saturation < self._saturation_min:
+        if saturation <= self._saturation_min:
             saturation = 0
-        if value < self._value_min:
+        if value <= self._value_min:
             value = 0
 
         self._HSVSink.send(hue, saturation, value)

@@ -22,6 +22,7 @@ class LifxSink(HSVSink):
         self._is_on = False
         self.bulb.set_power(True, rapid=True)
         self._kelvin_range = [self.bulb.get_min_kelvin() + 1500, self.bulb.get_max_kelvin()]
+        col = self.bulb.get_color()
 
     def is_on(self, connection: socket.socket) -> bool:
         self.connection.send(str.encode("getstatus\n"))
@@ -29,19 +30,22 @@ class LifxSink(HSVSink):
         return data == "status:on"
 
     def _get_kelvin(self, hue: int, saturation: int, value: int):
-        current_set = (hue, saturation, value)
         kelvin_val = self._kelvin_range[1]
-        pure_white = current_set[1] < 0.01
-        if not (pure_white) and current_set[0] not in [0.0, 0]:
+        pure_white = saturation < 0.01
+        brown_zone = 0.3
+        if (hue > brown_zone):
+            return 6500
+
+
+        if not (pure_white) and hue not in [0.0, 0]:
             kelvin_val = (
-                0.5 - (current_set[0] - 0.5)
-                if current_set[0] > 0.5
-                else current_set[0]
+                0.5 - (hue - 0.5)
+                if hue > 0.5
+                else hue
             )
 
             kelvin_val *= self._kelvin_range[1] - self._kelvin_range[0]
             kelvin_val += self._kelvin_range[0]
-            # kelvin_val += 1500  # Leads to better browns imo.
         return round(kelvin_val)
 
 
@@ -50,6 +54,7 @@ class LifxSink(HSVSink):
         current_set = (hue, saturation, value)
         current_set = [round(val * max_val) for val in current_set]
         current_set.append(self._get_kelvin(hue, saturation, value))
+        # (5461, 18724, 25700, 3500)
         self.bulb.set_color(current_set, rapid=True)
 
         if value == 0 and self._is_on:

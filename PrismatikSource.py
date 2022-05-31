@@ -6,7 +6,7 @@ import itertools
 import socket
 import statistics
 import colorsys
-from operator import itemgetter
+from operator import itemgetter, truediv
 
 
 class PrismatikSource(HSVSource):
