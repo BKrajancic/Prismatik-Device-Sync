@@ -6,7 +6,9 @@ import itertools
 import socket
 import statistics
 import colorsys
-from operator import itemgetter, truediv
+import os
+import json
+from operator import itemgetter
 
 
 class PrismatikSource(HSVSource):
@@ -16,6 +18,13 @@ class PrismatikSource(HSVSource):
         self._connection.recv(8192)
 
         self._gamma_correction = gamma_correction
+
+        configFilepath = "PrismatikConfig.json"
+        if os.path.exists(configFilepath):
+            with open(configFilepath, 'r') as f:
+                config = json.load(f)
+                self._led_start = config["LedStart"]
+                self._led_end = config["LedEnd"]
 
     def is_running(self) -> bool:
         self._connection.send(str.encode("getstatus\n"))
@@ -31,18 +40,15 @@ class PrismatikSource(HSVSource):
             itemgetter(1), map(str.split, string.split(";"), itertools.repeat("-"))
         )
 
-        entries = list(entries)
-        divisor = 1
-        r, g, b = zip(
-            *tuple(
+        return zip(
+            *(tuple(
                 map(
                     str.split,
-                    list(entries)[: len(entries) // divisor],
+                    itertools.islice(entries, self._led_start, self._led_end),
                     itertools.repeat(","),
                 )
-            )
+            ))
         )
-        return r, g, b
 
 
     def get_hsv(self) -> Tuple[float, float, float]:
@@ -53,28 +59,13 @@ class PrismatikSource(HSVSource):
         """
         r, g, b = self._get_leds()
 
-        geometric_mean = False
-        if geometric_mean:
-            r = [1 if value == "0" else int(value) for value in r]
-            g = [1 if value == "0" else int(value) for value in g]
-            b = [1 if value == "0" else int(value) for value in b]
+        r = map(int, r)
+        g = map(int, g)
+        b = map(int, b)
 
-            r_mean = statistics.geometric_mean(r)
-            g_mean = statistics.geometric_mean(g)
-            b_mean = statistics.geometric_mean(b)
-        else:
-            r = map(int, r)
-            g = map(int, g)
-            b = map(int, b)
-            if self._gamma_correction != 1.0:
-                max_val = 255
-                r = [max_val * pow(val / max_val, self.gamma_correction) for val in r]
-                g = [max_val * pow(val / max_val, self.gamma_correction) for val in g]
-                b = [max_val * pow(val / max_val, self.gamma_correction) for val in b]
-
-            r_mean = statistics.mean(r)
-            g_mean = statistics.mean(g)
-            b_mean = statistics.mean(b)
+        r_mean = statistics.mean(r)
+        g_mean = statistics.mean(g)
+        b_mean = statistics.mean(b)
 
         h, s, v = colorsys.rgb_to_hsv(r_mean / 255, g_mean / 255, b_mean / 255)
         return h, s, v
