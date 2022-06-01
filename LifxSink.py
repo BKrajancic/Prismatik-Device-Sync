@@ -22,6 +22,7 @@ class LifxSink(HSVSink):
         self._is_on = False
         self.bulb.set_power(True, rapid=True)
         self._kelvin_range = [self.bulb.get_min_kelvin() + 1500, self.bulb.get_max_kelvin()]
+        self._last_kelvin = 0
         col = self.bulb.get_color()
 
     def is_on(self, connection: socket.socket) -> bool:
@@ -31,17 +32,19 @@ class LifxSink(HSVSink):
 
     def _get_kelvin(self, hue: int, saturation: int, value: int):
         kelvin_val = self._kelvin_range[1]
-        pure_white = saturation < 0.01
-        if not (pure_white) and hue not in [0.0, 0]:
-            kelvin_val = (
-                0.5 - (hue - 0.5)
-                if hue > 0.5
-                else hue
-            )
+        pure_white = False # saturation < 0.01
+        if hue in [0.0, 0]:
+            return self._last_kelvin
 
-            kelvin_val *= self._kelvin_range[1] - self._kelvin_range[0]
-            kelvin_val += self._kelvin_range[0]
-        return round(kelvin_val)
+        if not (pure_white) and hue not in [0.0, 0]:
+            hue_multiplier = -abs(0.5 - hue) + 0.5
+
+            kelvin_range = self._kelvin_range[1] - self._kelvin_range[0]
+            new_kelvin_val = self._kelvin_range[0] + (hue_multiplier * kelvin_range)
+            kelvin_val = new_kelvin_val
+
+        self._last_kelvin = round(kelvin_val)
+        return self._last_kelvin
 
     def send(self, hue: int, saturation: int, value: int) -> None:
         # col = self.bulb.get_color()

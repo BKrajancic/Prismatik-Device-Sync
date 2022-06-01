@@ -4,6 +4,7 @@
     "UseThreshold": false,
     "SaturationBoost": 1.0,
     "ValueBoost": 1.0,
-    "ValueMin": 0.1,
-    "SaturationMin": 0.2
+    "SaturationMin": 0.10,
+    "ValueMin_Off": 0.1,
+    "ValueMin_On": 0.2
 }

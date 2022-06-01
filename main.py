@@ -49,7 +49,8 @@ def _main():
     sink = FloorSink(
         sink, 
         config["SaturationMin"],
-        config["ValueMin"]
+        config["ValueMin_Off"],
+        config["ValueMin_On"]
     )
 
     while True:
