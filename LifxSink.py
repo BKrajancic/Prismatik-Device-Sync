@@ -32,17 +32,16 @@ class LifxSink(HSVSink):
 
     def _get_kelvin(self, hue: int, saturation: int, value: int):
         kelvin_val = self._kelvin_range[1]
-        pure_white = False # saturation < 0.01
         if hue in [0.0, 0]:
             return self._last_kelvin
 
-        if not (pure_white) and hue not in [0.0, 0]:
-            hue_multiplier = -abs(0.5 - hue) + 0.5
+        if saturation < 0.01:
+            return kelvin_val
 
-            kelvin_range = self._kelvin_range[1] - self._kelvin_range[0]
-            new_kelvin_val = self._kelvin_range[0] + (hue_multiplier * kelvin_range)
-            kelvin_val = new_kelvin_val
-
+        hue_multiplier = -abs(0.5 - hue) + 0.5
+        kelvin_range = self._kelvin_range[1] - self._kelvin_range[0]
+        new_kelvin_val = self._kelvin_range[0] + (hue_multiplier * kelvin_range)
+        kelvin_val = new_kelvin_val
         self._last_kelvin = round(kelvin_val)
         return self._last_kelvin
 
