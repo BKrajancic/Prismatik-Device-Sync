@@ -1,3 +1,4 @@
+from audioop import mul
 from HSVSink import HSVSink
 import socket
 import os
@@ -23,30 +24,35 @@ class LifxSink(HSVSink):
         self.bulb.set_power(True, rapid=True)
         self._kelvin_range = [self.bulb.get_min_kelvin() + 1500, self.bulb.get_max_kelvin()]
         self._last_kelvin = 0
-        col = self.bulb.get_color()
+        self._saturation_min = 0.20
 
     def is_on(self, connection: socket.socket) -> bool:
         self.connection.send(str.encode("getstatus\n"))
         data: str = connection.recv(8192).decode().strip()
         return data == "status:on"
 
+    def _saturation_to_kelvin(self, saturation: int):
+        return min(1, pow(saturation / self._saturation_min, 2))
+
+    def _hue_to_kelvin(self, hue: int):
+        return -abs(0.5 - hue) + 0.5
+
     def _get_kelvin(self, hue: int, saturation: int, value: int):
         kelvin_val = self._kelvin_range[1]
-        if hue in [0.0, 0]:
-            return self._last_kelvin
 
-        if saturation < 0.01:
-            return kelvin_val
+        hue_multiplier = self._hue_to_kelvin(hue)
+        sat_multiplier = self._saturation_to_kelvin(saturation)
+        multiplier = hue_multiplier + (1 - sat_multiplier)
+        multiplier = max(multiplier, 0)
+        multiplier = min(multiplier, 1)
 
-        hue_multiplier = -abs(0.5 - hue) + 0.5
         kelvin_range = self._kelvin_range[1] - self._kelvin_range[0]
-        new_kelvin_val = self._kelvin_range[0] + (hue_multiplier * kelvin_range)
+        new_kelvin_val = self._kelvin_range[0] + (multiplier * kelvin_range)
         kelvin_val = new_kelvin_val
         self._last_kelvin = round(kelvin_val)
         return self._last_kelvin
 
     def send(self, hue: int, saturation: int, value: int) -> None:
-        # col = self.bulb.get_color()
         max_val = 65535
         current_set = (hue, saturation, value)
         current_set = [round(val * max_val) for val in current_set]
