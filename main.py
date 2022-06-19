@@ -3,6 +3,7 @@ import time
 import json
 
 from BoosterSink import BoosterSink
+from FloorSink import FloorSink
 from LifxSink import LifxSink
 from PrismatikSource import PrismatikSource
 from RazerSink import RazerSink
@@ -43,6 +44,13 @@ def _main():
         sink,
         config["SaturationBoost"],
         config["ValueBoost"]
+    )
+
+    sink = FloorSink(
+        sink, 
+        config["SaturationMin"],
+        config["ValueMin_Off"],
+        config["ValueMin_On"]
     )
 
     while True:
