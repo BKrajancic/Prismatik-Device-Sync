@@ -47,3 +47,44 @@ If you do not have Git installed, install this addon by doing the following:
 This repository contains `.ico` files for turning this addon off and on via the system tray.
   * Off icon: https://www.iconfinder.com/icons/2205230/botton_left_off_on_icon
   * On icon: https://www.iconfinder.com/icons/2205232/botton_off_on_right_icon 
+
+# Configuration
+
+## Config.json
+### RefreshRate
+How many timers per second to update the lights. 
+
+Higher values are more expensive in regards to: computation and network usage (if this is an online device).
+However, lower values can lead to the devices looking different than the PC backlight.
+
+### UseIcon
+If an icon should be added to the tray that allows turning the device on and off.
+
+### UseThreshold
+If this device 
+    "UseThreshold": false,
+### SaturationBoost
+Prior to sending the HSV value to the device, the saturation is multiplied by this value. This means that devices will have stronger colours and less likely to be white. This is great for some devices (such as RGB mousemats). 
+
+### ValueBoost
+Prior to sending the HSV value to the device, the value is multiplied by this value. This allows for the brightness to be made stronger or weaker.
+
+### SaturationMin
+Need to confirm this
+
+### ValueMin_Off
+After calculating the brightness to send to the device, if the brightness to send is lower than this percentage of the maximum value (0.1 is 10%), the device will turn off.
+
+### ValueMin_On
+After calculating the brightness to send to the device,  brightness to send is higher than this percentage of the maximum value (0.2 is 20%), and the device is off, the device will turn back on. Having this value higher than `ValueMin_Off` avoids flickering if the brightness hovers around that value, it's also more cinematic as the lights will only turn back on following the darker scene having completed.
+
+## milightConfig.json
+There are 3 parameters. 
+1. The IP address of the Milight hub.
+2. The port to use (8899 is default).
+3. The zone number to use.
+
+## lifxConfig.json
+There are two parameters, which is the IP address and Mac Address of the lightbulb. If these are the empty string, the addon will attempt to automatically find the LIFX bulb. If not, this allows for selecting which light to control with the addon. 
+
+Including the IP Address and Mac Address is more reliable.
