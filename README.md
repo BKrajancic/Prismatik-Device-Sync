@@ -18,7 +18,7 @@ as the directory. e.g. a folder called `Razer-Addon` with a file `Razer-Addon.in
 
 In this repository there are several `.ini` files because this repository can be used with several different devices. This addon can control multiple devices by being installed several times.
 
-Therefore to clone this repository, first navigate to `~/Prismatik/plugins`, then in a command prompt run: 
+Therefore to install this addon, copy this repository to the plugins folder, then rename the folder to match the device name. This can be done in two ways:
 
 ## Installation using Git
 If you have Git installed, open the aforementioned directory using the command line, then run one of the following commands:
