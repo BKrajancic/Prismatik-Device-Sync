@@ -73,8 +73,8 @@ However, lower values can lead to the devices looking different than the PC back
 If an icon should be added to the tray that allows turning the device on and off.
 
 ### UseThreshold
-If this device 
-    "UseThreshold": false,
+Instead of sending data to devices x amount of times per second, only send a new color if it has significantly changed.
+
 ### SaturationBoost
 Prior to sending the HSV value to the device, the saturation is multiplied by this value. This means that devices will have stronger colours and less likely to be white. This is great for some devices (such as RGB mousemats). 
 
