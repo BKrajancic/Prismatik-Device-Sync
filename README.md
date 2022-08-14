@@ -1,17 +1,17 @@
 # What is this?
-This is an addon that sychnronises milight/limitless-led or lifx lightbulbs to prismatik. 
+This repository allows users to synchronise their compatible device to their [Prismatik](https://github.com/psieg/Lightpack) powered PC backlight!
 
-This repository is currently setup for lifx, but the milight code is in there (do not hesitate to contact me if it is difficult to setup). 
 
-# Attributions
-Download the following in .ico, then put here with off.ico and on.ico.
-off icon: https://www.iconfinder.com/icons/2205230/botton_left_off_on_icon
-on icon: https://www.iconfinder.com/icons/2205232/botton_off_on_right_icon 
+# Installation
+Firstly, a working [Prismatik](https://github.com/psieg/Lightpack) installation is required.
 
-# Copying this repo
-Depending on how you copy this repo, is which device this plugin will run with.
+A Prismatik addon is installed by copying a folder to `~\Prismatik\Plugins`. Prismatik will run the addon by reading the `.ini` file with the same
+as the directory. e.g. a folder called `Razer-Addon` with a file `Razer-Addon.ini`.
 
-Go to directory your addons directory ( ~\Prismatik\Plugins)
+In this repository there are several `.ini` files because this repository can be used with several different devices,
+and the device used by Prismatik is based on the directory name. 
+
+Therefore to clone this repository, first navigate to `~Prismatik\plugs`, then: 
 
 ## Razer
 `git clone <url> Razer-Addon`
@@ -21,3 +21,9 @@ Go to directory your addons directory ( ~\Prismatik\Plugins)
 `git clone <url> OpenRGB-Addon`
 ## Milight
 `git clone <url> Milight-Addon`
+
+
+# Attributions
+This repository contains `.ico` files for turning this addon off and on via the system tray.
+off icon: https://www.iconfinder.com/icons/2205230/botton_left_off_on_icon
+on icon: https://www.iconfinder.com/icons/2205232/botton_off_on_right_icon 
