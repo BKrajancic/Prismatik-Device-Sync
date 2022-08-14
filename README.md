@@ -50,6 +50,17 @@ This repository contains `.ico` files for turning this addon off and on via the 
 
 # Configuration
 
+## PrismatikConfig.json
+This addon works by taking the average of each individual LED in the backlight. Editing PrismatikConfig allows for controlling which LEDS are considered.
+  * LedStart is the index of the first LED to consider (counting begins from 0). 
+  * LedEnd is the index of the last LED to consider. 
+This is useful in cases where the device is situated in a place near an edge, for instance if your smart light is on the left of the monitor.
+
+### How none works:
+  * If LedStart and LedEnd are both `none`, then all LEDs are considered.
+  * If only LedStart is `none` then all leds until `LedEnd` are considered.
+  * If only LedEnd is `none` then all leds from `LedStart` are considered.
+
 ## Config.json
 ### RefreshRate
 How many timers per second to update the lights. 
