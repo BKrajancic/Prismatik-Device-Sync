@@ -5,7 +5,7 @@ This repository allows users to synchronise their compatible device to their [Pr
 The following devices can be used with this addon:
 
   * [OpenRGB](https://openrgb.org/)
-  * [LIFX] (https://www.lifx.com/)
+  * [LIFX](https://www.lifx.com/)
   * [Milight/LimitlessLED](https://www.milight.com/)
   * [Razer](https://www.razer.com)
 
