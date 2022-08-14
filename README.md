@@ -49,6 +49,7 @@ This repository contains `.ico` files for turning this addon off and on via the 
   * On icon: https://www.iconfinder.com/icons/2205232/botton_off_on_right_icon 
 
 # Configuration
+In this directory there are several `.json` files that can be edited to to configure this addon. They are as follows:
 
 ## PrismatikConfig.json
 This addon works by taking the average of each individual LED in the backlight. Editing PrismatikConfig allows for controlling which LEDS are considered.
@@ -63,7 +64,7 @@ This is useful in cases where the device is situated in a place near an edge, fo
 
 ## Config.json
 ### RefreshRate
-How many timers per second to update the lights. 
+How many times per second to update the lights. 
 
 Higher values are more expensive in regards to: computation and network usage (if this is an online device).
 However, lower values can lead to the devices looking different than the PC backlight.
