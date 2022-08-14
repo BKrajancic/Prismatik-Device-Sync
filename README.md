@@ -1,5 +1,5 @@
 # What is this?
-This repository allows users to synchronise their compatible device to their [Prismatik](https://github.com/psieg/Lightpack) powered PC backlight!
+This repository allows users to synchronise compatible devices to a [Prismatik](https://github.com/psieg/Lightpack) powered PC backlight!
 
 # Device compatibility
 The following devices can be used with this addon:
