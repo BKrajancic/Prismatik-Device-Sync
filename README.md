@@ -36,7 +36,7 @@ If you have Git installed, open the aforementioned directory using the command l
 If you do not have Git installed, install this addon by doing the following:
 
   1. Download this repository as a `.zip` file, 
-  2. Extract it to ~/Prismatik/Plugins
+  2. Extract it to `~/Prismatik/Plugins`
   3. Rename the folder to match the device to use
      * For Razer: Razer-Addon
      * For Lifx: Lifx-Addon
