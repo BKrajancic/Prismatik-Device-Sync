@@ -1,11 +1,5 @@
-import itertools
-import socket
-import statistics
-import colorsys
 import time
 import json
-from operator import itemgetter
-from typing import Tuple
 from HSVSink import HSVSink
 
 from MilightWifiBridge import MilightWifiBridge

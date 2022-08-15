@@ -1,4 +1,3 @@
-from audioop import mul
 from HSVSink import HSVSink
 import socket
 import os
@@ -13,7 +12,8 @@ def _get_bulb() -> Light:
             config = json.load(f)[0]
             bulb = Light(config['mac_address'], config['ip_address'])
     else:
-        bulb: Light = lifxlan.get_color_lights()[0]
+        bulbs = lifxlan.get_color_lights()
+        bulb: Light = bulbs[0]
     return bulb
 
 
