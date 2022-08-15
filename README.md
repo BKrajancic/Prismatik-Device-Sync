@@ -62,6 +62,9 @@ prompt and type the following:
 
 This will install dependencies for the project.
 
+## Enabling connection
+In Prismatik, in the 'Expert' section, select "Enable Server."
+
 # Attributions
 This repository contains `.ico` files for turning this addon off and on via
 the system tray.
