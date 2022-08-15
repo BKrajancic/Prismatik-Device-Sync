@@ -147,3 +147,8 @@ automatically find the LIFX bulb. If not, this allows for selecting which
 light to control with the addon. 
 
 Including the IP Address and Mac Address is more reliable.
+
+## OpenRGBConfig.json
+There is only one parameter, `device_ids` which is an array of integers. These
+are the ids of the devices this addon controls (the first device listed in 
+OpenRGB is 0).
